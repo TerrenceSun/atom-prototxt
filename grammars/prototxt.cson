@@ -1,0 +1,69 @@
+'fileTypes':[
+  'prototxt',
+  'PROTOTXT'
+]
+'name': 'PROTOTXT'
+'patterns': [
+  {
+    'include': '#comment'
+  }
+  {
+    'include': '#body'
+  }
+]
+# default themes: https://github.com/atom/one-dark-syntax/blob/master/styles/language.less
+'repository':
+  'string':
+    'begin': '"'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.seperator.prototxt'
+    'end': '"'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.seperator.prototxt'
+    'name': 'string.prototxt'
+
+  'number':
+    'comment': 'handles integer and decimal numbers'
+    'match': '-?(?=[1-9]|0(?!\\d))\\d+(\\.\\d+)?([eE][+-]?\\d+)?'
+    'name': 'constant.numeric.prototxt'
+
+  'keywords':
+    'match': '\\b(layer)\\b'
+    'name': 'keyword.prototxt'
+
+  'comment':
+    'begin': '#'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.comment.prototxt'
+    'end': '\\n'
+    'name': 'comment.prototxt'
+
+  'body':
+    'begin': '\\{'
+    'end': '\\}'
+    'patterns': [
+      {
+        'begin': '(\\w+)\\s*:'
+        'beginCaptures':
+          '1':
+            'name': 'keyword.prototxt'
+        'end': '\\n'
+        'patterns': [
+          {
+            'include': '#string'
+          }
+          {
+            'include': '#number'
+          }
+        ]
+      }
+      {
+        'include': '#comment'
+      }
+    ]
+
+
+'scopeName': 'source.prototxt'

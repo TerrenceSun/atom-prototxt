@@ -1,0 +1,22 @@
+{
+  "name": "language-prototxt",
+  "main": "./lib/language-prototxt",
+  "version": "0.0.0",
+  "description": "highlight and quick navigation supports for .prototxt file, the model definition file of Caffe",
+  "keywords": [
+    "prototxt",
+    "highlight"
+  ],
+  "activationCommands": {
+    "atom-workspace": "language-prototxt:toggle"
+  },
+  "repository": "https://github.com/atom/language-prototxt",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "atom-space-pen-views": "^2.0.0",
+    "event-kit": "^1.0.0"
+  }
+}
