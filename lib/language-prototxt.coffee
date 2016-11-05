@@ -11,6 +11,15 @@ module.exports = LanguagePrototxt =
     "show-on-right-side":
       type: 'boolean'
       default: true
+      description: "Check to show the guidline on right side of the window."
+    "auto-reactivate":
+      type: 'boolean'
+      default: true
+      description: "Check to reactive guidline window according to last activate status."
+    "activated":
+      type: 'boolean'
+      default: false
+      description: "The last activate status."
 
   activate: (state) ->
     @languagePrototxtView = new LanguagePrototxtView(state.languagePrototxtViewState)
@@ -24,11 +33,15 @@ module.exports = LanguagePrototxt =
 
     atom.workspace.onDidStopChangingActivePaneItem @populateOutline.bind(this)
 
+    if atom.config.get('language-prototxt.auto-reactivate') and atom.config.get('language-prototxt.activated')
+      @outlinePanel.show()
+      @populateOutline()
+
 
 
   deactivate: ->
-    @outlinePanel.destroy()
     @subscriptions.dispose()
+    @outlinePanel.destroy()
     @languagePrototxtView.destroy()
 
   serialize: ->
@@ -36,12 +49,13 @@ module.exports = LanguagePrototxt =
 
   toggle: ->
     console.log 'LanguagePrototxt was toggled!'
-    console.log atom.workspace.getActiveTextEditor().getGrammar().name
+    #console.log atom.workspace.getActiveTextEditor().getGrammar().name
     if @outlinePanel.isVisible()
       @outlinePanel.hide()
     else
       @outlinePanel.show()
       @populateOutline()
+    atom.config.set('language-prototxt.activated', @outlinePanel.isVisible())
 
   populateOutline: ->
     editor = atom.workspace.getActiveTextEditor()
