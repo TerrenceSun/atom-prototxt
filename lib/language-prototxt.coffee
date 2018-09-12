@@ -2,11 +2,6 @@ LanguagePrototxtView = require './language-prototxt-view'
 {CompositeDisposable} = require 'atom'
 
 module.exports = LanguagePrototxt =
-
-  languagePrototxtView: null
-  outlinePanel: null
-  subscriptions: null
-
   config:
     "show-on-right-side":
       type: 'boolean'
@@ -16,13 +11,18 @@ module.exports = LanguagePrototxt =
       type: 'boolean'
       default: true
       description: "Check to reactive guidline window according to last activate status."
-    "activated":
+    activated:
       type: 'boolean'
       default: false
       description: "The last activate status."
 
+  languagePrototxtView: null
+  outlinePanel: null
+  subscriptions: null
+
   activate: (state) ->
     @languagePrototxtView = new LanguagePrototxtView(state.languagePrototxtViewState)
+
     @outlinePanel = atom.workspace.addRightPanel(item: @languagePrototxtView, visible: false)
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable

@@ -1,5 +1,11 @@
 LanguagePrototxtView = require '../lib/language-prototxt-view'
 
 describe "LanguagePrototxtView", ->
-  it "has one valid test", ->
-    expect("life").toBe "easy"
+  [workspaceElement, activationPromise] = []
+
+  beforeEach ->
+    workspaceElement = atom.views.getView(atom.workspace)
+    activationPromise = atom.packages.activatePackage('language-prototxt')
+
+  it "has the elements", ->
+    expect(workspaceElement.querySelector('.language-prototxt')).toExist()

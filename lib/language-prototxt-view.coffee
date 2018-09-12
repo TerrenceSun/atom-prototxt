@@ -3,11 +3,12 @@ module.exports =
 class LanguagePrototxtView extends View
   panel: null
   @content: ->
-    @div class: 'language-prototxt-view-resizer tool-panel', 'show-on-right-side': atom.config.get('language-prototxt.show-on-right-side'), =>
-      @div "Layer Outline"
-      @div class: 'language-prototxt-view-scroller order--center', outlet: 'scroller', =>
-        @ol class: 'language-prototxt-view full-menu list-tree focusable-panel', outlet: 'list'
-      @div class: 'language-prototxt-view-resize-handle', outlet: 'resizeHandle'
+    @div class: 'language-prototxt', =>
+      @div class: 'language-prototxt-view-resizer', 'show-on-right-side': atom.config.get('language-prototxt.show-on-right-side'), =>
+        @div "Layer Outline"
+        @div class: 'language-prototxt-view-scroller order--center', outlet: 'scroller', =>
+          @ol class: 'language-prototxt-view full-menu list-tree focusable-panel', outlet: 'list'
+        @div class: 'language-prototxt-view-resize-handle', outlet: 'resizeHandle'
 
   initialize:(state) ->
     @handleEvents()
