@@ -1,7 +1,7 @@
 {
   "name": "language-prototxt",
   "main": "./lib/language-prototxt",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "highlight and quick navigation supports for .prototxt file, the model definition file of Caffe",
   "keywords": [
     "prototxt",
