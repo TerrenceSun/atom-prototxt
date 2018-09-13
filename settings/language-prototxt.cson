@@ -1,0 +1,4 @@
+'.prototxt':
+  'editor':
+    'autoIndentOnPaste': false
+    'commentStart': '# '
