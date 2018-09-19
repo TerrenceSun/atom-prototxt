@@ -4,41 +4,23 @@ class LanguagePrototxtView extends View
   panel: null
   @content: ->
     @div class: 'language-prototxt', =>
-      @div class: 'language-prototxt-view-resizer', 'show-on-right-side': atom.config.get('language-prototxt.show-on-right-side'), =>
-        @div "Layer Outline"
-        @div class: 'language-prototxt-view-scroller order--center', outlet: 'scroller', =>
-          @ol class: 'language-prototxt-view full-menu list-tree focusable-panel', outlet: 'list'
-        @div class: 'language-prototxt-view-resize-handle', outlet: 'resizeHandle'
+      @div class: 'language-prototxt-view-scroller order--center', outlet: 'scroller', =>
+        @ol class: 'language-prototxt-view full-menu list-tree focusable-panel', outlet: 'list'
 
   initialize:(state) ->
     @handleEvents()
+
+  getTitle: -> 'Layer Outline'
+  getURI: -> 'atom://language-prototxt'
+  getPreferredLocation: -> 'right'
+  isPermantDockItem: -> true
+  getAllowedLocations: -> ["left", "right"]
 
   serialize: ->
 
   destroy: ->
 
-
   handleEvents: ->
-    @on 'mousedown', '.language-prototxt-view-resize-handle', (e) => @resizeStarted(e)
-
-
-  resizeStarted: =>
-    console.log 'Mouse Down!'
-    $(document).on('mousemove', @resizeTreeView)
-    $(document).on('mouseup', @resizeStopped)
-
-  resizeStopped: =>
-    $(document).off('mousemove', @resizeTreeView)
-    $(document).off('mouseup', @resizeStopped)
-
-  resizeTreeView: ({pageX, which}) =>
-    return @resizeStopped() unless which is 1
-
-    if atom.config.get('language-prototxt.show-on-right-side')
-      width = @outerWidth() + @offset().left - pageX
-    else
-      width = pageX - @offset().left
-    @width(width)
 
   onContentsModified: (editor, force = false) ->
     @list.empty()

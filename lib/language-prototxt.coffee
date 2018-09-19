@@ -2,28 +2,18 @@ LanguagePrototxtView = require './language-prototxt-view'
 {CompositeDisposable} = require 'atom'
 
 module.exports = LanguagePrototxt =
-  config:
-    "show-on-right-side":
-      type: 'boolean'
-      default: true
-      description: "Check to show the guidline on right side of the window."
-    "auto-reactivate":
-      type: 'boolean'
-      default: true
-      description: "Check to reactive guidline window according to last activate status."
-    activated:
-      type: 'boolean'
-      default: false
-      description: "The last activate status."
-
   languagePrototxtView: null
-  outlinePanel: null
   subscriptions: null
+
 
   activate: (state) ->
     @languagePrototxtView = new LanguagePrototxtView(state.languagePrototxtViewState)
 
-    @outlinePanel = atom.workspace.addRightPanel(item: @languagePrototxtView, visible: false)
+    atom.workspace.open(@languagePrototxtView).then =>
+      # the panel would be shown by default
+      # we will hide the panel if activate status is turned on, and it was toggled off
+      if atom.config.get('language-prototxt.autoReactivate') and not atom.config.get('language-prototxt.active')
+        atom.workspace.paneContainerForURI(@languagePrototxtView.getURI()).hide()
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
@@ -33,15 +23,11 @@ module.exports = LanguagePrototxt =
 
     atom.workspace.onDidStopChangingActivePaneItem @populateOutline.bind(this)
 
-    if atom.config.get('language-prototxt.auto-reactivate') and atom.config.get('language-prototxt.activated')
-      @outlinePanel.show()
-      @populateOutline()
 
 
 
   deactivate: ->
     @subscriptions.dispose()
-    @outlinePanel.destroy()
     @languagePrototxtView.destroy()
 
   serialize: ->
@@ -49,13 +35,8 @@ module.exports = LanguagePrototxt =
 
   toggle: ->
     console.log 'LanguagePrototxt was toggled!'
-    #console.log atom.workspace.getActiveTextEditor().getGrammar().name
-    if @outlinePanel.isVisible()
-      @outlinePanel.hide()
-    else
-      @outlinePanel.show()
-      @populateOutline()
-    atom.config.set('language-prototxt.activated', @outlinePanel.isVisible())
+    atom.workspace.toggle(@languagePrototxtView).then =>
+      atom.config.set('language-prototxt.active', atom.workspace.paneContainerForURI(@languagePrototxtView.getURI()).isVisible())
 
   populateOutline: ->
     editor = atom.workspace.getActiveTextEditor()

@@ -15,5 +15,19 @@
   "dependencies": {
     "atom-space-pen-views": "^2.0.0",
     "event-kit": "^1.0.0"
+  },
+  "configSchema": {
+    "autoReactivate": {
+      "type": "boolean",
+      "default": true,
+      "title": "Keep last state",
+      "description": "Check to reactive guidline window according to last activate status."
+    },
+    "active": {
+      "type": "boolean",
+      "default": "false",
+      "title": "Last opened",
+      "description": "The last activate status. The value is managed automatically."
+    }
   }
 }
