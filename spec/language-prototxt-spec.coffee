@@ -32,7 +32,6 @@ describe "LanguagePrototxt", ->
 
       runs ->
         # Now we can test for view visibility
-        languagePrototxtElement = workspaceElement.querySelector('.language-prototxt')
-        expect(languagePrototxtElement).toBeVisible()
+        expect(atom.workspace.paneContainerForURI('atom://language-prototxt').isVisible()).toBe(true)
         atom.commands.dispatch workspaceElement, 'language-prototxt:toggle'
-        expect(languagePrototxtElement).not.toBeVisible()
+        expect(atom.workspace.paneContainerForURI('atom://language-prototxt').isVisible()).toBe(false)
